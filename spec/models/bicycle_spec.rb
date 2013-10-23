@@ -80,6 +80,11 @@ describe Bicycle do
         query = 'Vancouver'
         Bicycle.flexible_search(query).should match_array [@bike1, @bike2]
       end
+
+      it 'should return bikes that match parts of the description' do
+        query = 'Gringo Station'
+        Bicycle.flexible_search(query).should match_array [@bike1, @bike2]
+      end
     end
 
     context 'advanced search' do
@@ -102,6 +107,11 @@ describe Bicycle do
       it 'should return bikes that match all parameters' do
         query = { model: 'Aquarius', color: 'Mauve' }
         Bicycle.flexible_search(query).should eq [@bike2]
+      end
+
+      it 'should return bikes that match parts of the description parameters' do
+        query = { description: 'This is my bike' }
+        Bicycle.flexible_search(query).should match_array [@bike1, @bike2]
       end
     end
   end
