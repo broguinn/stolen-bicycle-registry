@@ -49,6 +49,12 @@ describe Bicycle do
       Bicycle.flexible_search(query).should eq [@bike1]
     end
 
+    it "results should match partially" do
+      @bike2.update(hidden: true )
+      query = 'Vancou'
+      Bicycle.flexible_search(query).should eq [@bike1]
+    end
+
     it "basic/advanced search results include only unrecovered listings by
       default" do
       @bike2.update(recovered: true)
@@ -77,6 +83,12 @@ describe Bicycle do
     end
 
     context 'advanced search' do
+      it "results should match partially" do
+        @bike2.update(hidden: true )
+        query = { city: 'Vancou' }
+        Bicycle.flexible_search(query).should eq [@bike1]
+      end
+
       it "should return nil when given all empty fields" do
         query = { model: '' }
         Bicycle.flexible_search(query).should eq Bicycle.none

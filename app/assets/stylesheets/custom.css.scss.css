@@ -1,3 +1,19 @@
+.sbr-responsive {
+  width: 320px;
+  height: 50px;
+}
+
+@media(min-width: 500px) {
+  .sbr-responsive { width: 468px; height: 60px; }
+}
+
+@media(min-width: 800px) {
+  .sbr-responsive {
+    width: 728px;
+    height: 90px;
+  }
+}
+
 @media (min-width: 321px) {
   #bicycle-icon {
     position: absolute;
@@ -150,7 +166,7 @@
 
 .btn-register {
   background-color: gray;
-  color: orange; 
+  color: orange;
 }
 
 .btn-login {
@@ -181,13 +197,13 @@
 }
 
 .donate {
-  width:100%; 
+  width:100%;
   text-align:center;
   margin-top:5%;
 }
 
 .google-ad {
-  
+
   max-width: 100%;
   height: auto;
   text-align: center;
@@ -256,9 +272,9 @@ background-color: #3498DB;
 }
 
 .table tbody > tr > td {
-  padding: 4px;  
+  padding: 4px;
 }
 
 #edit-delete {
-  margin-left: 15px;  
+  margin-left: 15px;
 }
