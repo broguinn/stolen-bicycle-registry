@@ -8,6 +8,16 @@
 <% @user.bicycles.each do |bicycle| %>
 <div class='well'>
   <p>Stolen on: <%= bicycle.date %></p>
+
+  <%= form_for(bicycle) do |f| %> 
+    <div class="field">
+      <%= f.label :recovered, 'recovered' %> 
+      <%= f.check_box :recovered %>
+      <%= f.submit %>
+    </div>
+  <% end %>
+
+
   <p><%= bicycle.brand %></p>
   <p><%= bicycle.model %></p>
   <p><a href=<%= bicycle_path(bicycle) %> ><%= image_tag bicycle.photo.url :thumb %></a></p>
