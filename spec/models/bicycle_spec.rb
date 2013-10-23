@@ -39,30 +39,10 @@ describe Bicycle do
   describe ".flexible_search" do
     before do
       @bike1 = FactoryGirl.create(:bicycle)
-      @bike2 = FactoryGirl.create(:bicycle, model: 'Vancouver', color: 'Mauve')
+      @bike2 = FactoryGirl.create(:bicycle, city: 'Vancouver', color: 'Mauve')
     end
 
-    it "basic search should not return results given an empty search string" do
-      query = ''
-      Bicycle.flexible_search(query).should eq Bicycle.none
-    end
-
-    it "basic search should return search results given a search string" do
-      query = 'Vancouver'
-      Bicycle.flexible_search(query).should match_array [@bike1, @bike2]
-    end
-
-    it "advanced search should return nil when given all empty fields" do
-      query = { model: '' }
-      Bicycle.flexible_search(query).should eq Bicycle.none
-    end
-
-    it "advanced search should return search results given an empty field" do
-      query = { model: '', color: 'Mauve' }
-      Bicycle.flexible_search(query).should eq [@bike2]
-    end
-
-    it "search results should not include bike listings that are currently
+    it "results should not include bike listings that are currently
         hidden by a user/admin" do
       @bike2.update(hidden: true )
       query = 'Vancouver'
@@ -82,6 +62,35 @@ describe Bicycle do
       query = HashWithIndifferentAccess.new({ city: 'Vancouver',
                                               recovered: '1' })
       Bicycle.flexible_search(query).should match_array [@bike1, @bike2]
+    end
+
+    context 'basic search' do
+      it "should not return results given an empty search string" do
+        query = ''
+        Bicycle.flexible_search(query).should eq Bicycle.none
+      end
+
+      it "should return search results given a search string" do
+        query = 'Vancouver'
+        Bicycle.flexible_search(query).should match_array [@bike1, @bike2]
+      end
+    end
+
+    context 'advanced search' do
+      it "should return nil when given all empty fields" do
+        query = { model: '' }
+        Bicycle.flexible_search(query).should eq Bicycle.none
+      end
+
+      it "should return search results given an empty field" do
+        query = { model: '', color: 'Mauve' }
+        Bicycle.flexible_search(query).should eq [@bike2]
+      end
+
+      it 'should return bikes that match all parameters' do
+        query = { model: 'Aquarius', color: 'Mauve' }
+        Bicycle.flexible_search(query).should eq [@bike2]
+      end
     end
   end
 end
